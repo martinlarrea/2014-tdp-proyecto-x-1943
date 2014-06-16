@@ -65,11 +65,17 @@ public class MainFrameG1 extends javax.swing.JFrame {
 	
 	private void thisKeyPressed(KeyEvent evt) {
 		switch (evt.getKeyCode()) {
-		case KeyEvent.VK_UP: System.out.println("UP"); break;
-		case KeyEvent.VK_DOWN: System.out.println("DOWN"); break;
-		case KeyEvent.VK_LEFT: System.out.println("LEFT"); break;
-		case KeyEvent.VK_RIGHT: System.out.println("RIGHT"); break;
+		case KeyEvent.VK_UP: this.movePlane(0, -5); break;
+		case KeyEvent.VK_DOWN: this.movePlane(0, 5); break;
+		case KeyEvent.VK_LEFT: this.movePlane(-5, 0); break;
+		case KeyEvent.VK_RIGHT: this.movePlane(5, 0); break;
 		}
+	}
+	
+	private void movePlane( int offx, int offy ) {
+		int x = this.jLabelPlane.getLocation().x;
+		int y = this.jLabelPlane.getLocation().y;
+		this.jLabelPlane.setLocation( x + offx, y + offy );
 	}
 
 }
