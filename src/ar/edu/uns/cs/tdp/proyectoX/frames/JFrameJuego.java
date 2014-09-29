@@ -74,7 +74,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 		super();
 		initGUI();
 		initGame();
-		initAudio();
+		//initAudio();
 	}
 	
 
