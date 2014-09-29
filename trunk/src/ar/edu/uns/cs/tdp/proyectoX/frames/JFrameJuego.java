@@ -156,12 +156,11 @@ public class JFrameJuego extends javax.swing.JFrame {
 				{
 					jToggleButtonAudio = new JToggleButton();
 					jToolBarTop.add(jToggleButtonAudio);
-					jToggleButtonAudio.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-on.png")));
+					jToggleButtonAudio.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-off.png")));
 					jToggleButtonAudio.setBounds(221, 77, 46, 39);
 					jToggleButtonAudio.setOpaque(false);
-					jToggleButtonAudio.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-off.png")));
-					jToggleButtonAudio.setDisabledSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-off.png")));
 					jToggleButtonAudio.setFocusable(false);
+					jToggleButtonAudio.setSelected(true);
 					jToggleButtonAudio.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							jToggleButtonAudioActionPerformed(evt);
@@ -272,9 +271,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 	}
 	
 	private void initAudio() {
-		ap = new AudioPlayer("ar/edu/uns/cs/tdp/proyectoX/resources/audio/dangerzone.mp3");
-		audio = new Thread(ap);
-		audio.start();
+		
 	}
 	
 	private void jToggleButtonAudioActionPerformed(ActionEvent evt) {
