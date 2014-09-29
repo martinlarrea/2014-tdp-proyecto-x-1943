@@ -45,6 +45,18 @@ public class MenteTeclado extends Mente implements KeyListener {
 				pos.setLocation(v, pos.y);
 				break;
 			}
+			case KeyEvent.VK_A: {
+				this.juego.disparoA(this.nave.getLocation());
+				break;
+			}
+			case KeyEvent.VK_S: {
+				this.juego.disparoB(this.nave.getLocation());
+				break;
+			}
+			case KeyEvent.VK_D: {
+				this.juego.disparoC(this.nave.getLocation());
+				break;
+			}
 		}
 		this.nave.setLocation(pos);
 		this.juego.repaint();
