@@ -1,5 +1,6 @@
 package ar.edu.uns.cs.tdp.proyectoX.main;
 
+import ar.edu.uns.cs.tdp.proyectoX.frames.JFrameJuego;
 import ar.edu.uns.cs.tdp.proyectoX.frames.SplashScreen;
 
 public class Main {
@@ -12,7 +13,8 @@ public class Main {
 		SplashScreen splash = new SplashScreen(3000);
 		splash.showSplash();	
 		
-		System.exit(0);
+		JFrameJuego jfj = new JFrameJuego();
+		jfj.setVisible(true);
 	}
 
 }
