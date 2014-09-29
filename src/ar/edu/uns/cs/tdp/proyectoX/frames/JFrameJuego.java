@@ -1,5 +1,6 @@
 package ar.edu.uns.cs.tdp.proyectoX.frames;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -39,11 +40,21 @@ public class JFrameJuego extends javax.swing.JFrame {
 	private Nave jLabelNaveJugador;
 	private JButton jButtonNuevoJuego;
 	private JButton jButtonExit;
+	private JLabel jLabelPuntaje;
+	private JSeparator jSeparator3;
+	private JLabel jLabelBomba1;
+	private JSeparator jSeparator2;
+	private JToolBar jToolBarBottom;
+	private JLabel jButtonVida1;
 	private JSeparator jSeparator1;
 	private JButton jButtonIdioma;
 	private JButton jButtonPlanes;
 	private JToolBar jToolBarTop;
 	private Nave jLabelBoss;
+	private JLabel jButtonVida2;
+	private JLabel jButtonVida3;
+	private JLabel jLabelBomba2;
+	private JLabel jLabelBomba3;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -100,21 +111,28 @@ public class JFrameJuego extends javax.swing.JFrame {
 			{
 				jToolBarTop = new JToolBar();
 				getContentPane().add(jToolBarTop, BorderLayout.NORTH);
-				jToolBarTop.setOpaque(false);
+				jToolBarTop.setFloatable(false);
+				jToolBarTop.setBackground(new java.awt.Color(131,186,204));
 				{
 					jButtonNuevoJuego = new JButton();
 					jToolBarTop.add(jButtonNuevoJuego);
 					jButtonNuevoJuego.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nuevo-juego.png")));
+					jButtonNuevoJuego.setOpaque(false);
+					jButtonNuevoJuego.setFocusable(false);
 				}
 				{
 					jButtonPlanes = new JButton();
 					jToolBarTop.add(jButtonPlanes);
 					jButtonPlanes.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-planes.png")));
+					jButtonPlanes.setOpaque(false);
+					jButtonPlanes.setFocusable(false);
 				}
 				{
 					jButtonIdioma = new JButton();
 					jToolBarTop.add(jButtonIdioma);
 					jButtonIdioma.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-idioma.png")));
+					jButtonIdioma.setOpaque(false);
+					jButtonIdioma.setFocusable(false);
 				}
 				{
 					jSeparator1 = new JSeparator();
@@ -125,11 +143,76 @@ public class JFrameJuego extends javax.swing.JFrame {
 					jButtonExit = new JButton();
 					jToolBarTop.add(jButtonExit);
 					jButtonExit.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-salir.png")));
+					jButtonExit.setOpaque(false);
+					jButtonExit.setFocusable(false);
 					jButtonExit.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							jButtonExitActionPerformed(evt);
 						}
 					});
+				}
+			}
+			{
+				jToolBarBottom = new JToolBar();
+				jToolBarBottom.setLayout( new FlowLayout(FlowLayout.LEFT));
+				getContentPane().add(jToolBarBottom, BorderLayout.SOUTH);
+				jToolBarBottom.setBackground(new java.awt.Color(123,146,154));
+				jToolBarBottom.setFloatable(false);
+				{
+					jButtonVida1 = new JLabel();
+					jToolBarBottom.add(jButtonVida1);
+					jButtonVida1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-vida-disponible.png")));
+					jButtonVida1.setOpaque(false);
+					jButtonVida1.setFocusable(false);
+
+					jButtonVida2 = new JLabel();
+					jToolBarBottom.add(jButtonVida2);
+					jButtonVida2.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-vida-disponible.png")));
+					jButtonVida2.setOpaque(false);
+					jButtonVida2.setFocusable(false);
+
+					jButtonVida3 = new JLabel();
+					jToolBarBottom.add(jButtonVida3);
+					jButtonVida3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-vida-usada.png")));
+					jButtonVida3.setOpaque(false);
+					jButtonVida3.setFocusable(false);
+				}
+				{
+					jSeparator2 = new JSeparator();
+					jToolBarBottom.add(jSeparator2);
+					jSeparator2.setOrientation(SwingConstants.VERTICAL);
+					jSeparator2.setSize(50, 48);
+					jSeparator2.setPreferredSize(new java.awt.Dimension(10, 48));
+				}
+				{
+					jLabelBomba1 = new JLabel();
+					jToolBarBottom.add(jLabelBomba1);
+					jLabelBomba1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-disponible.png")));
+					jLabelBomba1.setFocusable(false);
+
+					jLabelBomba2 = new JLabel();
+					jToolBarBottom.add(jLabelBomba2);
+					jLabelBomba2.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-usada.png")));
+					jLabelBomba2.setFocusable(false);
+
+					jLabelBomba3 = new JLabel();
+					jToolBarBottom.add(jLabelBomba3);
+					jLabelBomba3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-usada.png")));
+					jLabelBomba3.setFocusable(false);
+				}
+				{
+					jSeparator3 = new JSeparator();
+					jToolBarBottom.add(jSeparator3);
+					jSeparator3.setOrientation(SwingConstants.VERTICAL);
+					jSeparator3.setPreferredSize(new java.awt.Dimension(150, 48));
+				}
+				{
+					jLabelPuntaje = new JLabel();
+					jToolBarBottom.add(jLabelPuntaje);
+					jLabelPuntaje.setText("0992");
+					jLabelPuntaje.setFont(new java.awt.Font("Andale Mono",1,26));
+					jLabelPuntaje.setForeground(new java.awt.Color(165,42,42));
+					jLabelPuntaje.setFocusable(false);
 				}
 			}
 			pack();
