@@ -159,6 +159,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 					jToggleButtonAudio.setOpaque(false);
 					jToggleButtonAudio.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-off.png")));
 					jToggleButtonAudio.setDisabledSelectedIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-off.png")));
+					jToggleButtonAudio.setFocusable(false);
 					jToggleButtonAudio.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent evt) {
 							jToggleButtonAudioActionPerformed(evt);
