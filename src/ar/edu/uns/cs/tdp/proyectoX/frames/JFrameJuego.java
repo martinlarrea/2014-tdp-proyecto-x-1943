@@ -99,7 +99,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 					jLabelNaveJugador = new Nave();
 					jPanelNivel.add(jLabelNaveJugador);
 					jLabelNaveJugador.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nave-tipo1-jugador.png")));
-					jLabelNaveJugador.setBounds(286, 527, 56, 56);
+					jLabelNaveJugador.setBounds(270, 353, 56, 56);
 				}
 				{
 					jLabelBoss = new Nave();
@@ -216,7 +216,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 				}
 			}
 			pack();
-			this.setSize(600, 800);
+			this.setSize(600, 550);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
