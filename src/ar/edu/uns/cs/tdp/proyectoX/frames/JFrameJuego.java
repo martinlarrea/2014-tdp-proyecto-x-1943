@@ -20,6 +20,10 @@ import ar.edu.uns.cs.tdp.proyectoX.MegaMente;
 import ar.edu.uns.cs.tdp.proyectoX.MenteTeclado;
 import ar.edu.uns.cs.tdp.proyectoX.Nave;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -64,8 +68,11 @@ public class JFrameJuego extends javax.swing.JFrame {
 		super();
 		initGUI();
 		initGame();
+		initAudio();
 	}
 	
+
+
 	private void initGame() {		
 		menteTeclado = new MenteTeclado();
 		menteTeclado.setJuego(this);
@@ -235,6 +242,19 @@ public class JFrameJuego extends javax.swing.JFrame {
 		this.dispose();
 		System.exit(0);
 		
+	}
+	
+	private void initAudio() {
+		try{
+			AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/audio/dangerzone.mp3"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start( );
+		}
+		catch(Exception ex)
+		{  
+			ex.printStackTrace();
+		}
 	}
 
 }

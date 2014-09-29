@@ -27,11 +27,8 @@ public class MegaMente extends Mente {
 		}
 
 		Point pos = this.nave.getLocation();
-		Reporter.Report(pos.x);
-		Reporter.Report(pos.y);
 		while( pos.y < 0 ) {
 			try {
-				Reporter.Report(pos.y);
 				MegaMente.sleep(100);
 				int v = pos.y + 8;
 				this.nave.setLocation( pos.x, v);
