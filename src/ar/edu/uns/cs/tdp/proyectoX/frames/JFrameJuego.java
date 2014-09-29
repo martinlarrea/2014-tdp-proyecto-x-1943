@@ -1,6 +1,7 @@
 package ar.edu.uns.cs.tdp.proyectoX.frames;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -20,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
+import ar.edu.uns.cs.tdp.proyectoX.AutoRemove;
 import ar.edu.uns.cs.tdp.proyectoX.MegaMente;
 import ar.edu.uns.cs.tdp.proyectoX.MenteTeclado;
 import ar.edu.uns.cs.tdp.proyectoX.Nave;
@@ -300,4 +302,46 @@ public class JFrameJuego extends javax.swing.JFrame {
 		audio = null;
 	}
 
+
+
+	public void disparoA(Point location) {
+		JLabel disparo = new JLabel();
+		disparo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nave-tipo1-laser1.png")));
+		Point pos = new Point( location.x + 26, location.y - 600 + 28 );
+		disparo.setLocation(pos);
+		disparo.setPreferredSize(new java.awt.Dimension(4, 600));
+		disparo.setSize(4, 600);
+		this.jPanelNivel.add(disparo);
+		
+		AutoRemove ar = new AutoRemove( disparo, this.jPanelNivel);
+		ar.start();		
+	}
+
+
+
+	public void disparoB(Point location) {
+		JLabel disparo = new JLabel();
+		disparo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nave-tipo1-laser2.png")));
+		Point pos = new Point( location.x + 23, location.y - 600 + 28 );
+		disparo.setLocation(pos);
+		disparo.setPreferredSize(new java.awt.Dimension(10, 600));
+		disparo.setSize(10, 600);
+		this.jPanelNivel.add(disparo);
+		
+		AutoRemove ar = new AutoRemove( disparo, this.jPanelNivel);
+		ar.start();				
+	}
+
+	public void disparoC(Point location) {
+		JLabel disparo = new JLabel();
+		disparo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nave-tipo1-laser3.png")));
+		Point pos = new Point( location.x+3, location.y - 600 + 28 );
+		disparo.setLocation(pos);
+		disparo.setPreferredSize(new java.awt.Dimension(50, 600));
+		disparo.setSize(50, 600);
+		this.jPanelNivel.add(disparo);
+		
+		AutoRemove ar = new AutoRemove( disparo, this.jPanelNivel);
+		ar.start();				
+	}
 }
