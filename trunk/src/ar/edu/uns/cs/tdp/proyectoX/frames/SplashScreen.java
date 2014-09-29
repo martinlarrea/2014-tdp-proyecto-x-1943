@@ -38,7 +38,15 @@ public class SplashScreen extends JWindow {
 	public void showSplash() {
 		 JPanel content = (JPanel)getContentPane();
 		 content.setBackground(new java.awt.Color(191,191,191));
-		
+		 content.setLayout(null);
+		 JLabel label = new JLabel(new ImageIcon("oreilly.gif"));
+		 JLabel copyrt = new JLabel
+		   ("Rock.AR v2.0 - Created by Martín L. Larrea", JLabel.CENTER);
+		 copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 12));
+		 copyrt.setForeground(new java.awt.Color(165,42,42));
+		 copyrt.setText("Plane WAR - TdP 2014");
+		 content.add(copyrt, "South");
+
 		 // Set the window's bounds, centering the window
 		 int width = 450;
 		 int height =115;
@@ -48,23 +56,20 @@ public class SplashScreen extends JWindow {
 		 this.setBounds(0, 0, 915, 460);
 		
 		 // Build the splash screen
-		 JLabel label = new JLabel(new ImageIcon("oreilly.gif"));
-		 JLabel copyrt = new JLabel
-		   ("Rock.AR v2.0 - Created by Martín L. Larrea", JLabel.CENTER);
-		 copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 12));
-		 copyrt.setForeground(new java.awt.Color(165,42,42));
-		 copyrt.setText("Plane WAR - TdP 2014");
-		 content.add(label, BorderLayout.WEST);
-		 label.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/Bravo-Echo-Plane-icon.png")));
-		 content.add(copyrt, BorderLayout.SOUTH);
+
 		 {
 			 jLabelTitle = new JLabel();
-			 content.add(jLabelTitle, BorderLayout.CENTER);
+			 content.add(jLabelTitle, "Center");
 			 jLabelTitle.setText("Plane WAR");
 			 jLabelTitle.setFont(new java.awt.Font("Ubuntu",0,72));
 			 jLabelTitle.setHorizontalAlignment(SwingConstants.CENTER);
-			 jLabelTitle.setForeground(new java.awt.Color(165,42,42));
+			 jLabelTitle.setForeground(new java.awt.Color(255,165,0));
+			 jLabelTitle.setBounds(0, 298, 437, 157);
 		 }
+		 content.add(label, BorderLayout.WEST);
+		 label.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-juego-splash.jpg")));
+		 label.setBounds(0, 1, 915, 458);
+		 copyrt.setBounds(18, 405, 464, 43);
 
 		 // Display it
 		 setVisible(true);
@@ -75,6 +80,8 @@ public class SplashScreen extends JWindow {
 		 setVisible(false);
 		 getContentPane().setBackground(new java.awt.Color(0,0,0));
 		 this.setOpacity(0.0f);
+		 content.add(copyrt, "South");
+		 content.add(label, "West");
 	}
 
 	public void showSplashAndExit() {

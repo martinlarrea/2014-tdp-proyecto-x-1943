@@ -9,8 +9,10 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 
-		SplashScreen splash = new SplashScreen(2000);
-		splash.showSplash();		
+		SplashScreen splash = new SplashScreen(3000);
+		splash.showSplash();	
+		
+		System.exit(0);
 	}
 
 }
