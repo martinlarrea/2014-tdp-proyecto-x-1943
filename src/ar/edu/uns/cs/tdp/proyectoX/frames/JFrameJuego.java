@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileInputStream;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,10 +22,13 @@ import javax.swing.SwingUtilities;
 import ar.edu.uns.cs.tdp.proyectoX.MegaMente;
 import ar.edu.uns.cs.tdp.proyectoX.MenteTeclado;
 import ar.edu.uns.cs.tdp.proyectoX.Nave;
+import ar.edu.uns.cs.tdp.proyectoX.audio.AudioPlayer;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+
+import javazoom.jl.player.Player;
 
 
 /**
@@ -245,16 +251,9 @@ public class JFrameJuego extends javax.swing.JFrame {
 	}
 	
 	private void initAudio() {
-		try{
-			AudioInputStream audioInputStream =AudioSystem.getAudioInputStream(this.getClass().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/audio/dangerzone.mp3"));
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioInputStream);
-			clip.start( );
-		}
-		catch(Exception ex)
-		{  
-			ex.printStackTrace();
-		}
+		AudioPlayer ap = new AudioPlayer("ar/edu/uns/cs/tdp/proyectoX/resources/audio/dangerzone.mp3");
+		Thread t = new Thread(ap);
+		t.start();
 	}
 
 }
