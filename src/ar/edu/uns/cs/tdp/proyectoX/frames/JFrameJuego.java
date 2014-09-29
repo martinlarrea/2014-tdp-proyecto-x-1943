@@ -68,6 +68,8 @@ public class JFrameJuego extends javax.swing.JFrame {
 	private JLabel jButtonVida3;
 	private JLabel jLabelBomba2;
 	private JLabel jLabelBomba3;
+	private AudioPlayer ap;
+	private Thread audio;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -77,7 +79,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 		super();
 		initGUI();
 		initGame();
-		//initAudio();
+		initAudio();
 	}
 	
 
@@ -270,9 +272,9 @@ public class JFrameJuego extends javax.swing.JFrame {
 	}
 	
 	private void initAudio() {
-		AudioPlayer ap = new AudioPlayer("ar/edu/uns/cs/tdp/proyectoX/resources/audio/dangerzone.mp3");
-		Thread t = new Thread(ap);
-		t.start();
+		ap = new AudioPlayer("ar/edu/uns/cs/tdp/proyectoX/resources/audio/dangerzone.mp3");
+		audio = new Thread(ap);
+		audio.start();
 	}
 	
 	private void jToggleButtonAudioActionPerformed(ActionEvent evt) {
@@ -287,12 +289,18 @@ public class JFrameJuego extends javax.swing.JFrame {
 
 	private void audioOn() {
 		jToggleButtonAudio.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-on.png")));
+		ap = new AudioPlayer("ar/edu/uns/cs/tdp/proyectoX/resources/audio/dangerzone.mp3");
+		audio = new Thread(ap);
+		audio.start();
 	}
 
 
 
 	private void audioOff() {
-		jToggleButtonAudio.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-off.png")));		
+		jToggleButtonAudio.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-off.png")));
+		ap = null;
+		audio.stop();
+		audio = null;
 	}
 
 }
