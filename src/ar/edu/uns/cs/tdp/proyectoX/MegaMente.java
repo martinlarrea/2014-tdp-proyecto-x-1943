@@ -20,7 +20,7 @@ public class MegaMente extends Mente {
 	public void run() {
 		boolean condicion = true;
 		try {
-			MegaMente.sleep(5000);
+			MegaMente.sleep(10000);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

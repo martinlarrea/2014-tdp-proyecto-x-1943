@@ -24,6 +24,7 @@ import javax.swing.SwingUtilities;
 import ar.edu.uns.cs.tdp.proyectoX.AutoRemove;
 import ar.edu.uns.cs.tdp.proyectoX.MegaMente;
 import ar.edu.uns.cs.tdp.proyectoX.MenteMaestra;
+import ar.edu.uns.cs.tdp.proyectoX.MentePremio;
 import ar.edu.uns.cs.tdp.proyectoX.MenteTeclado;
 import ar.edu.uns.cs.tdp.proyectoX.Nave;
 import ar.edu.uns.cs.tdp.proyectoX.audio.AudioPlayer;
@@ -74,6 +75,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 	private AudioPlayer ap;
 	private Thread audio;
 	private MenteMaestra menteMaestra;
+	private MentePremio mentePremio;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -104,6 +106,12 @@ public class JFrameJuego extends javax.swing.JFrame {
 		menteMaestra.setJuego(this);
 		menteMaestra.preparar();
 		menteMaestra.jugar();
+		
+		mentePremio = new MentePremio();
+		mentePremio.setJuego(this);
+		mentePremio.preparar();
+		mentePremio.jugar();
+		
 		
 	}
 
