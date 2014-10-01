@@ -23,6 +23,7 @@ import javax.swing.SwingUtilities;
 
 import ar.edu.uns.cs.tdp.proyectoX.AutoRemove;
 import ar.edu.uns.cs.tdp.proyectoX.MegaMente;
+import ar.edu.uns.cs.tdp.proyectoX.MenteMaestra;
 import ar.edu.uns.cs.tdp.proyectoX.MenteTeclado;
 import ar.edu.uns.cs.tdp.proyectoX.Nave;
 import ar.edu.uns.cs.tdp.proyectoX.audio.AudioPlayer;
@@ -72,6 +73,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 	private JLabel jLabelBomba3;
 	private AudioPlayer ap;
 	private Thread audio;
+	private MenteMaestra menteMaestra;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -97,6 +99,11 @@ public class JFrameJuego extends javax.swing.JFrame {
 		megaMente.setNave(jLabelBoss);
 		megaMente.preparar();
 		megaMente.jugar();
+		
+		menteMaestra = new MenteMaestra();
+		menteMaestra.setJuego(this);
+		menteMaestra.preparar();
+		menteMaestra.jugar();
 		
 	}
 
@@ -208,7 +215,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 
 					jButtonVida3 = new JLabel();
 					jToolBarBottom.add(jButtonVida3);
-					jButtonVida3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-vida-usada.png")));
+					jButtonVida3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-vida-disponible.png")));
 					jButtonVida3.setOpaque(false);
 					jButtonVida3.setFocusable(false);
 				}
@@ -227,12 +234,12 @@ public class JFrameJuego extends javax.swing.JFrame {
 
 					jLabelBomba2 = new JLabel();
 					jToolBarBottom.add(jLabelBomba2);
-					jLabelBomba2.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-usada.png")));
+					jLabelBomba2.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-disponible.png")));
 					jLabelBomba2.setFocusable(false);
 
 					jLabelBomba3 = new JLabel();
 					jToolBarBottom.add(jLabelBomba3);
-					jLabelBomba3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-usada.png")));
+					jLabelBomba3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-disponible.png")));
 					jLabelBomba3.setFocusable(false);
 				}
 				{
@@ -244,7 +251,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 				{
 					jLabelPuntaje = new JLabel();
 					jToolBarBottom.add(jLabelPuntaje);
-					jLabelPuntaje.setText("0992");
+					jLabelPuntaje.setText("0000");
 					jLabelPuntaje.setFont(new java.awt.Font("Andale Mono",1,26));
 					jLabelPuntaje.setForeground(new java.awt.Color(165,42,42));
 					jLabelPuntaje.setFocusable(false);
@@ -300,6 +307,10 @@ public class JFrameJuego extends javax.swing.JFrame {
 		ap = null;
 		audio.stop();
 		audio = null;
+	}
+	
+	public void agregarNave( Nave n ) {
+		this.jPanelNivel.add(n);
 	}
 
 
