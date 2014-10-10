@@ -39,6 +39,7 @@ import javax.swing.JPanel;
 public class JFrameJuego extends javax.swing.JFrame {
 	private JPanel jPanelNivel;
 	private SkyNet skynet;
+	private JPanel jPanelGameOver;
 	private JLabel jLabelNube;
 	private JPanel jPanelNubes;
 	private JLabel jLabelBarco2;
@@ -46,6 +47,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 	private JPanel jPanelBarcos;
 	private JLabel jLabelAgua;
 	private JPanel jPanelAgua;
+	private JLabel jLabelGameOver;
 	private Jugador naveJugador;
 	private int navesEnemigas = 2;
 
@@ -101,6 +103,20 @@ public class JFrameJuego extends javax.swing.JFrame {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
+			{
+				jPanelGameOver = new JPanel();
+				getContentPane().add(jPanelGameOver);
+				jPanelGameOver.setLayout(null);
+				jPanelGameOver.setSize(600, 800);
+				jPanelGameOver.setBackground(new java.awt.Color(0,0,0));
+				jPanelGameOver.setVisible(false);
+				{
+					jLabelGameOver = new JLabel();
+					jPanelGameOver.add(jLabelGameOver);
+					jLabelGameOver.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-juego-game-over.jpg")));
+					jLabelGameOver.setBounds(78, 390, 500, 365);
+				}
+			}
 			this.addWindowListener(new WindowAdapter() {
 				public void windowClosed(WindowEvent evt) {
 					thisWindowClosed(evt);
@@ -116,7 +132,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 				getContentPane().add(jPanelNivel, "Center");
 				jPanelNivel.setLayout(null);
 				jPanelNivel.setBackground(new java.awt.Color(173,216,230));
-				jPanelNivel.setBounds(0, 0, 590, 770);
+				jPanelNivel.setBounds(1, 0, 590, 770);
 				jPanelNivel.setOpaque(false);
 			}
 			{
@@ -244,6 +260,11 @@ public class JFrameJuego extends javax.swing.JFrame {
 	
 	private void thisWindowClosed(WindowEvent evt) {
 		System.exit(0);
+	}
+
+	public void gameOver() {
+		this.jPanelGameOver.setVisible(true);
+		
 	}
 
 }

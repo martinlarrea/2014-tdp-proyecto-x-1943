@@ -44,7 +44,7 @@ public class SkyNet extends Thread {
 					b.reLocation();
 				} else {
 					if( b.alcanzoObjeto(this.amigo)) {
-						//b.golpearObjeto(this.amigo);
+						b.golpearObjeto(this.amigo);
 					}
 				}
 			}
@@ -56,6 +56,9 @@ public class SkyNet extends Thread {
 			}
 			eliminarEliminables();
 			agregarAgregables();
+		}
+		if( this.amigo.getVida() <= 0 ) {
+			this.juego.gameOver();
 		}
 	}
 
