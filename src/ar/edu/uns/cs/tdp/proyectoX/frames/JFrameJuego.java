@@ -1,39 +1,28 @@
 package ar.edu.uns.cs.tdp.proyectoX.frames;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.FileInputStream;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
 
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-import ar.edu.uns.cs.tdp.proyectoX.AutoRemove;
-import ar.edu.uns.cs.tdp.proyectoX.MegaMente;
-import ar.edu.uns.cs.tdp.proyectoX.MenteTeclado;
-import ar.edu.uns.cs.tdp.proyectoX.Nave;
-import ar.edu.uns.cs.tdp.proyectoX.audio.AudioPlayer;
-import ar.edu.uns.cs.vyglab.util.Reporter;
+import ar.edu.uns.cs.tdp.proyectoX.decoraciones.Barcos;
+import ar.edu.uns.cs.tdp.proyectoX.decoraciones.Nubes;
+import ar.edu.uns.cs.tdp.proyectoX.logica.SkyNet;
+import ar.edu.uns.cs.tdp.proyectoX.logica.balas.Bala;
+import ar.edu.uns.cs.tdp.proyectoX.logica.balas.BalaEnCaida;
+import ar.edu.uns.cs.tdp.proyectoX.logica.naves.Enemiga;
+import ar.edu.uns.cs.tdp.proyectoX.logica.naves.Enemiga2;
+import ar.edu.uns.cs.tdp.proyectoX.logica.naves.Jugador;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import java.awt.BorderLayout;
+import java.awt.Point;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
-import javazoom.jl.player.Player;
-
+import javax.swing.JPanel;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -48,30 +37,19 @@ import javazoom.jl.player.Player;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class JFrameJuego extends javax.swing.JFrame {
-	private MenteTeclado menteTeclado;
-	private MegaMente megaMente;
 	private JPanel jPanelNivel;
-	private Nave jLabelNaveJugador;
-	private JButton jButtonNuevoJuego;
-	private JButton jButtonExit;
-	private JToggleButton jToggleButtonAudio;
-	private JLabel jLabelPuntaje;
-	private JSeparator jSeparator3;
-	private JLabel jLabelBomba1;
-	private JSeparator jSeparator2;
-	private JToolBar jToolBarBottom;
-	private JLabel jButtonVida1;
-	private JSeparator jSeparator1;
-	private JButton jButtonIdioma;
-	private JButton jButtonPlanes;
-	private JToolBar jToolBarTop;
-	private Nave jLabelBoss;
-	private JLabel jButtonVida2;
-	private JLabel jButtonVida3;
-	private JLabel jLabelBomba2;
-	private JLabel jLabelBomba3;
-	private AudioPlayer ap;
-	private Thread audio;
+	private SkyNet skynet;
+	private JPanel jPanelGameOver;
+	private JLabel jLabelNube;
+	private JPanel jPanelNubes;
+	private JLabel jLabelBarco2;
+	private JLabel jLabelBarco1;
+	private JPanel jPanelBarcos;
+	private JLabel jLabelAgua;
+	private JPanel jPanelAgua;
+	private JLabel jLabelGameOver;
+	private Jugador naveJugador;
+	private int navesEnemigas = 2;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -81,267 +59,212 @@ public class JFrameJuego extends javax.swing.JFrame {
 		super();
 		initGUI();
 		initGame();
-		initAudio();
+		startGame();
 	}
 	
-
-
-	private void initGame() {		
-		menteTeclado = new MenteTeclado();
-		menteTeclado.setJuego(this);
-		menteTeclado.setNave(jLabelNaveJugador);
-		this.addKeyListener(menteTeclado);
+	private void startGame() {
+		this.skynet.start();
+		Barcos barcos = new Barcos(this);
+		barcos.start();
 		
-		megaMente = new MegaMente();
-		megaMente.setJuego(this);
-		megaMente.setNave(jLabelBoss);
-		megaMente.preparar();
-		megaMente.jugar();
+		Nubes nubes = new Nubes(this);
+		nubes.start();
+		
+	}
+
+	private void initGame() {
+		Random rnd = new Random( System.currentTimeMillis() );
+		
+		this.skynet = new SkyNet(this);
+		this.naveJugador = new Jugador(this.skynet);
+		this.skynet.setAmigo(this.naveJugador);
+		for( int i = 0; i < this.navesEnemigas; i++ ) {
+			Enemiga e = new Enemiga(this.skynet);
+			this.skynet.agregarObjeto(e);
+			this.jPanelNivel.add(e);
+			e.setLocation(rnd.nextInt(this.getWidth()), rnd.nextInt(100));
+		}
+		
+		for( int i = 0; i < this.navesEnemigas; i++ ) {
+			Enemiga e = new Enemiga2(this.skynet);
+			this.skynet.agregarObjeto(e);
+			this.jPanelNivel.add(e);
+			e.setLocation(rnd.nextInt(this.getWidth()), rnd.nextInt(100));
+		}
+		
+		this.skynet.agregarAgregables();
+		
+		this.jPanelNivel.add(this.naveJugador);
+		this.naveJugador.setLocation(300, 300);
 		
 	}
 
 	private void initGUI() {
 		try {
-			this.setLocationByPlatform(true);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			getContentPane().setBackground(new java.awt.Color(173,216,230));
-			this.setResizable(false);
+			getContentPane().setLayout(null);
+			{
+				jPanelGameOver = new JPanel();
+				getContentPane().add(jPanelGameOver);
+				jPanelGameOver.setLayout(null);
+				jPanelGameOver.setSize(600, 800);
+				jPanelGameOver.setBackground(new java.awt.Color(0,0,0));
+				jPanelGameOver.setVisible(false);
+				{
+					jLabelGameOver = new JLabel();
+					jPanelGameOver.add(jLabelGameOver);
+					jLabelGameOver.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-juego-game-over.jpg")));
+					jLabelGameOver.setBounds(78, 390, 500, 365);
+				}
+			}
 			this.addWindowListener(new WindowAdapter() {
-				public void windowClosing(WindowEvent evt) {
-					thisWindowClosing(evt);
+				public void windowClosed(WindowEvent evt) {
+					thisWindowClosed(evt);
+				}
+			});
+			this.addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent evt) {
+					thisKeyPressed(evt);
 				}
 			});
 			{
 				jPanelNivel = new JPanel();
-				getContentPane().add(jPanelNivel, BorderLayout.CENTER);
+				getContentPane().add(jPanelNivel, "Center");
 				jPanelNivel.setLayout(null);
+				jPanelNivel.setBackground(new java.awt.Color(173,216,230));
+				jPanelNivel.setBounds(1, 0, 590, 770);
 				jPanelNivel.setOpaque(false);
+			}
+			{
+				jPanelNubes = new JPanel();
+				getContentPane().add(jPanelNubes);
+				jPanelNubes.setLayout(null);
+				jPanelNubes.setSize(600, 800);
+				jPanelNubes.setOpaque(false);
 				{
-					jLabelNaveJugador = new Nave();
-					jPanelNivel.add(jLabelNaveJugador);
-					jLabelNaveJugador.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nave-tipo1-jugador.png")));
-					jLabelNaveJugador.setBounds(270, 353, 56, 56);
-				}
-				{
-					jLabelBoss = new Nave();
-					jPanelNivel.add(jLabelBoss);
-					jLabelBoss.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nave-tipo1-boss.png")));
-					jLabelBoss.setBounds(128, -269, 350, 314);
+					jLabelNube = new JLabel();
+					jPanelNubes.add(jLabelNube);
+					jLabelNube.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-cloud.png")));
+					jLabelNube.setBounds(0, -541, 512, 512);
 				}
 			}
 			{
-				jToolBarTop = new JToolBar();
-				getContentPane().add(jToolBarTop, BorderLayout.NORTH);
-				jToolBarTop.setFloatable(false);
-				jToolBarTop.setBackground(new java.awt.Color(131,186,204));
+				jPanelBarcos = new JPanel();
+				getContentPane().add(jPanelBarcos);
+				jPanelBarcos.setLayout(null);
+				jPanelBarcos.setSize(600, 800);
+				jPanelBarcos.setOpaque(false);
 				{
-					jButtonNuevoJuego = new JButton();
-					jToolBarTop.add(jButtonNuevoJuego);
-					jButtonNuevoJuego.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nuevo-juego.png")));
-					jButtonNuevoJuego.setOpaque(false);
-					jButtonNuevoJuego.setFocusable(false);
+					jLabelBarco1 = new JLabel();
+					jPanelBarcos.add(jLabelBarco1);
+					jLabelBarco1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-barco1.png")));
+					jLabelBarco1.setBounds(436, -461, 48, 350);
 				}
 				{
-					jButtonPlanes = new JButton();
-					jToolBarTop.add(jButtonPlanes);
-					jButtonPlanes.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-planes.png")));
-					jButtonPlanes.setOpaque(false);
-					jButtonPlanes.setFocusable(false);
-				}
-				{
-					jButtonIdioma = new JButton();
-					jToolBarTop.add(jButtonIdioma);
-					jButtonIdioma.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-idioma.png")));
-					jButtonIdioma.setOpaque(false);
-					jButtonIdioma.setFocusable(false);
-				}
-				{
-					jToggleButtonAudio = new JToggleButton();
-					jToolBarTop.add(jToggleButtonAudio);
-					jToggleButtonAudio.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-off.png")));
-					jToggleButtonAudio.setBounds(221, 77, 46, 39);
-					jToggleButtonAudio.setOpaque(false);
-					jToggleButtonAudio.setFocusable(false);
-					jToggleButtonAudio.setSelected(true);
-					jToggleButtonAudio.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent evt) {
-							jToggleButtonAudioActionPerformed(evt);
-						}
-					});
-				}
-				{
-					jSeparator1 = new JSeparator();
-					jToolBarTop.add(jSeparator1);
-					jSeparator1.setOrientation(SwingConstants.VERTICAL);
-				}
-				{
-					jButtonExit = new JButton();
-					jToolBarTop.add(jButtonExit);
-					jButtonExit.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-salir.png")));
-					jButtonExit.setOpaque(false);
-					jButtonExit.setFocusable(false);
-					jButtonExit.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent evt) {
-							jButtonExitActionPerformed(evt);
-						}
-					});
+					jLabelBarco2 = new JLabel();
+					jPanelBarcos.add(jLabelBarco2);
+					jLabelBarco2.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-barco2.png")));
+					jLabelBarco2.setBounds(94, -277, 46, 248);
 				}
 			}
 			{
-				jToolBarBottom = new JToolBar();
-				jToolBarBottom.setLayout( new FlowLayout(FlowLayout.LEFT));
-				getContentPane().add(jToolBarBottom, BorderLayout.SOUTH);
-				jToolBarBottom.setBackground(new java.awt.Color(123,146,154));
-				jToolBarBottom.setFloatable(false);
+				jPanelAgua = new JPanel();
+				BorderLayout jPanelAguaLayout = new BorderLayout();
+				getContentPane().add(jPanelAgua);
+				jPanelAgua.setLayout(jPanelAguaLayout);
+				jPanelAgua.setSize(600, 800);
+				jPanelAgua.setBackground(new java.awt.Color(161,204,161));
 				{
-					jButtonVida1 = new JLabel();
-					jToolBarBottom.add(jButtonVida1);
-					jButtonVida1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-vida-disponible.png")));
-					jButtonVida1.setOpaque(false);
-					jButtonVida1.setFocusable(false);
-
-					jButtonVida2 = new JLabel();
-					jToolBarBottom.add(jButtonVida2);
-					jButtonVida2.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-vida-disponible.png")));
-					jButtonVida2.setOpaque(false);
-					jButtonVida2.setFocusable(false);
-
-					jButtonVida3 = new JLabel();
-					jToolBarBottom.add(jButtonVida3);
-					jButtonVida3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-vida-usada.png")));
-					jButtonVida3.setOpaque(false);
-					jButtonVida3.setFocusable(false);
-				}
-				{
-					jSeparator2 = new JSeparator();
-					jToolBarBottom.add(jSeparator2);
-					jSeparator2.setOrientation(SwingConstants.VERTICAL);
-					jSeparator2.setSize(50, 48);
-					jSeparator2.setPreferredSize(new java.awt.Dimension(10, 48));
-				}
-				{
-					jLabelBomba1 = new JLabel();
-					jToolBarBottom.add(jLabelBomba1);
-					jLabelBomba1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-disponible.png")));
-					jLabelBomba1.setFocusable(false);
-
-					jLabelBomba2 = new JLabel();
-					jToolBarBottom.add(jLabelBomba2);
-					jLabelBomba2.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-usada.png")));
-					jLabelBomba2.setFocusable(false);
-
-					jLabelBomba3 = new JLabel();
-					jToolBarBottom.add(jLabelBomba3);
-					jLabelBomba3.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-bomba-usada.png")));
-					jLabelBomba3.setFocusable(false);
-				}
-				{
-					jSeparator3 = new JSeparator();
-					jToolBarBottom.add(jSeparator3);
-					jSeparator3.setOrientation(SwingConstants.VERTICAL);
-					jSeparator3.setPreferredSize(new java.awt.Dimension(150, 48));
-				}
-				{
-					jLabelPuntaje = new JLabel();
-					jToolBarBottom.add(jLabelPuntaje);
-					jLabelPuntaje.setText("0992");
-					jLabelPuntaje.setFont(new java.awt.Font("Andale Mono",1,26));
-					jLabelPuntaje.setForeground(new java.awt.Color(165,42,42));
-					jLabelPuntaje.setFocusable(false);
+					jLabelAgua = new JLabel();
+					jPanelAgua.add(jLabelAgua, BorderLayout.CENTER);
+					jLabelAgua.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-agua.png")));
+					//jLabelAgua.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-agua.png")));
 				}
 			}
 			pack();
-			this.setSize(600, 550);
+			this.setSize(600, 800);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
 		}
 	}
-	
-	private void jButtonExitActionPerformed(ActionEvent evt) {
-		cerrarJuego();
+
+	public void agregarObjeto(Bala bec) {
+		this.jPanelNivel.add(bec);		
+	}
+
+	public void eliminarObjeto(Bala b) {
+		this.jPanelNivel.remove(b);		
+	}
+
+	public boolean estaFueraDePantalla(Bala b) {
+		return( ( b.getLocation().x > this.getWidth() ) || ( b.getLocation().y > this.getHeight() ) );
+	}
+
+	public JLabel getBarco1() {
+		return this.jLabelBarco1;
 	}
 	
-	private void thisWindowClosing(WindowEvent evt) {
-		cerrarJuego();
+	public JLabel getBarco2() {
+		return this.jLabelBarco2;
+	}
+
+	public JLabel getNube() {
+		return this.jLabelNube;
 	}
 	
-	private void cerrarJuego() {
-		this.dispose();
-		System.exit(0);
-		
+	private void thisKeyPressed(KeyEvent evt) {
+		this.movimientoJugador(evt.getKeyCode());
 	}
-	
-	private void initAudio() {
-		
-	}
-	
-	private void jToggleButtonAudioActionPerformed(ActionEvent evt) {
-		if(this.jToggleButtonAudio.isSelected()) {
-			audioOff();
-		} else {
-			audioOn();
+
+	private void movimientoJugador(int keyCode) {
+		Point pos = this.naveJugador.getLocation();	
+		int factor = 10;
+		switch(keyCode) {
+			case KeyEvent.VK_UP: {
+				int v = pos.y - factor;
+				pos.setLocation(pos.x, v);
+				break;
+			}
+			case KeyEvent.VK_DOWN: {
+				int v = pos.y + factor;
+				pos.setLocation(pos.x, v);
+				break;
+			}
+			case KeyEvent.VK_LEFT: {
+				int v = pos.x - factor;
+				pos.setLocation(v, pos.y);
+				break;
+			}
+			case KeyEvent.VK_RIGHT: {
+				int v = pos.x + factor;
+				pos.setLocation(v, pos.y);
+				break;
+			}
+//			case KeyEvent.VK_A: {
+//				this.juego.disparoA(this.nave.getLocation());
+//				break;
+//			}
+//			case KeyEvent.VK_S: {
+//				this.juego.disparoB(this.nave.getLocation());
+//				break;
+//			}
+//			case KeyEvent.VK_D: {
+//				this.juego.disparoC(this.nave.getLocation());
+//				break;
+//			}
 		}
-	}
-
-
-
-	private void audioOn() {
-		jToggleButtonAudio.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-on.png")));
-		ap = new AudioPlayer("ar/edu/uns/cs/tdp/proyectoX/resources/audio/dangerzone.mp3");
-		audio = new Thread(ap);
-		audio.start();
-	}
-
-
-
-	private void audioOff() {
-		jToggleButtonAudio.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-audio-off.png")));
-		ap = null;
-		audio.stop();
-		audio = null;
-	}
-
-
-
-	public void disparoA(Point location) {
-		JLabel disparo = new JLabel();
-		disparo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nave-tipo1-laser1.png")));
-		Point pos = new Point( location.x + 26, location.y - 600 + 28 );
-		disparo.setLocation(pos);
-		disparo.setPreferredSize(new java.awt.Dimension(4, 600));
-		disparo.setSize(4, 600);
-		this.jPanelNivel.add(disparo);
+		this.naveJugador.setLocation(pos);
 		
-		AutoRemove ar = new AutoRemove( disparo, this.jPanelNivel);
-		ar.start();		
+	}
+	
+	private void thisWindowClosed(WindowEvent evt) {
+		System.exit(0);
 	}
 
-
-
-	public void disparoB(Point location) {
-		JLabel disparo = new JLabel();
-		disparo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nave-tipo1-laser2.png")));
-		Point pos = new Point( location.x + 23, location.y - 600 + 28 );
-		disparo.setLocation(pos);
-		disparo.setPreferredSize(new java.awt.Dimension(10, 600));
-		disparo.setSize(10, 600);
-		this.jPanelNivel.add(disparo);
+	public void gameOver() {
+		this.jPanelGameOver.setVisible(true);
 		
-		AutoRemove ar = new AutoRemove( disparo, this.jPanelNivel);
-		ar.start();				
 	}
 
-	public void disparoC(Point location) {
-		JLabel disparo = new JLabel();
-		disparo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-nave-tipo1-laser3.png")));
-		Point pos = new Point( location.x+3, location.y - 600 + 28 );
-		disparo.setLocation(pos);
-		disparo.setPreferredSize(new java.awt.Dimension(50, 600));
-		disparo.setSize(50, 600);
-		this.jPanelNivel.add(disparo);
-		
-		AutoRemove ar = new AutoRemove( disparo, this.jPanelNivel);
-		ar.start();				
-	}
 }
