@@ -113,8 +113,8 @@ public class JFrameJuego extends javax.swing.JFrame {
 				{
 					jLabelGameOver = new JLabel();
 					jPanelGameOver.add(jLabelGameOver);
-					jLabelGameOver.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-juego-game-over.jpg")));
-					jLabelGameOver.setBounds(78, 390, 500, 365);
+					jLabelGameOver.setIcon(new ImageIcon(getClass().getClassLoader().getResource("ar/edu/uns/cs/tdp/proyectoX/resources/images/tdp-game-over.png")));
+					jLabelGameOver.setBounds(141, 217, 500, 365);
 				}
 			}
 			this.addWindowListener(new WindowAdapter() {
@@ -263,7 +263,7 @@ public class JFrameJuego extends javax.swing.JFrame {
 	}
 
 	public void gameOver() {
-		this.jPanelGameOver.setVisible(true);
+		jPanelGameOver.setVisible(true);
 		
 	}
 
